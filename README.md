@@ -50,7 +50,7 @@ CREATE TABLE geodata (id TEXT PRIMARY KEY, g__coordinates TEXT, g__type TEXT, p_
 
 ## import-csv-sqlite.sh
 
-A quick bash script to import a CSV file (like one generated through `geojson-to-csv.py`) into a SQlite table with matching column headers (like one generated through `create-sql-table.py`).
+A quick bash script to import a CSV file (like one generated through `geojson-to-csv.py`) into a SQlite table. Note: it is not necessary to run `create-sql-table.py` beforehand as this script will generate the column headers if not found, but they may not follow the desired schema.
 
 Usage:
 
