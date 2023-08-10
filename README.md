@@ -20,20 +20,15 @@ Node usage:
 node .\node\geojson-to-csv.js [YOUR_FILE].geojson --output [YOUR_OUTPUT].csv
 ```
 
-The scripts assume the following structure of a `feature` in a GeoJSON file.
+The scripts will generate the following columns per the standard GeoJSON fields:
 
-```
-├── id
-├── geometry
-│   ├── type
-│   └── coordinates
-│       └── [...]
-└── properties
-    ├── ...
-    └── ...
-```
-
-Any keys stored in the `geometry` key are converted to column headers prefixed by `g__` and any keys stored in the `properties` key are converted to column headers prefixed by `p__`. Any `$` and `-` characters in the headers are replaced by `_`.
+| CSV Column | GeoJSON Field |
+|------------|---------------|
+| id         | id            |
+| g\_\_type    | geometry.type |
+| g\_\_coordinates | geometry.coordinates |
+| p\_\_...     | properties... |
+| p\_\_\_...     | properties.$... |
 
 If no `id` is found, then it creates a random 16 character hash.
 
