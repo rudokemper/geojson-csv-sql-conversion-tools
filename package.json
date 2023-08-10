@@ -1,0 +1,25 @@
+{
+  "name": "geojson-csv-sql-conversion-tools",
+  "version": "1.0.0",
+  "description": "Scripts to convert GeoJSON to CSV and dump into SQLite",
+  "dependencies": {
+    "argparse": "^2.0.1",
+    "csv-parser": "^3.0.0",
+    "csv-write-stream": "^2.0.0",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rudokemper/geojson-csv-sql-conversion-tools.git"
+  },
+  "author": "Rudo Kemper",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/rudokemper/geojson-csv-sql-conversion-tools/issues"
+  },
+  "homepage": "https://github.com/rudokemper/geojson-csv-sql-conversion-tools#readme"
+}

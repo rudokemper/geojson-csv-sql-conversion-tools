@@ -1,17 +1,26 @@
-# geojson-csv-sql-conversion-tools
+# GeoJSON to CSV to SQL conversion tools
 
-A small selection of Python and bash scripts to help convert the contents of a GeoJSON file so they can be ingested into a SQL database.
+A small selection of Python, Node, and bash scripts to help convert the contents of a GeoJSON file so they can be ingested into a SQL database.
 
-## geojson-to-csv.py
+The Python and Node scripts do the same thing.
 
-A quick Python script to convert GeoJSON to CSV.
+## geojson-to-csv
 
-Usage:
+A quick script to convert GeoJSON to CSV.
 
-```python geojson_to_csv.py --input [YOUR_FILE].geojson --output [YOUR_OUTPUT].csv```
+Python usage:
 
+```
+python .\python\geojson_to_csv.py --input [YOUR_FILE].geojson --output [YOUR_OUTPUT].csv
+```
 
-The script assumes the following structure of a `feature` in a GeoJSON file.
+Node usage:
+
+```
+node .\node\geojson-to-csv.js [YOUR_FILE].geojson --output [YOUR_OUTPUT].csv
+```
+
+The scripts assume the following structure of a `feature` in a GeoJSON file.
 
 ```
 ├── id
@@ -30,19 +39,25 @@ If no `id` is found, then it creates a random 16 character hash.
 
 The root level key `type` is ignored (but open to understanding use cases where it could be valuable to preserve this for SQL storage)
 
-## create-sql-table.py
+## create-sql-table
 
-A quick Python script to generate a SQL command that creates a SQL table on the basis of your CSV file.
+A quick script to generate a SQL command that creates a SQL table on the basis of your CSV file.
 
-Usage:
+Python usage:
 
 ```
-python csv-to-sql.py --input [YOUR_FILE].csv --table [YOUR_TABLE_NAME]
+python .\python\csv-to-sql.py --input [YOUR_FILE].csv --table [YOUR_TABLE_NAME]
+```
+
+Node usage:
+
+```
+node .\node\csv-to-sql.js --input [YOUR_FILE].csv --table [YOUR_TABLE_NAME]
 ```
 
 The output is printed to the console for you to copy. You can use this in the SQLite CLI or a tool like Beekeeper Studio to create the table.
 
-Example:
+Example output:
 
 ```
 CREATE TABLE geodata (id TEXT PRIMARY KEY, g__coordinates TEXT, g__type TEXT, p__$created TEXT, p__$modified TEXT, p__$photos TEXT, p__$version TEXT);
@@ -50,16 +65,18 @@ CREATE TABLE geodata (id TEXT PRIMARY KEY, g__coordinates TEXT, g__type TEXT, p_
 
 ## import-csv-sqlite.sh
 
-A quick bash script to import a CSV file (like one generated through `geojson-to-csv.py`) into a SQlite table. Note: it is not necessary to run `create-sql-table.py` beforehand as this script will generate the column headers if not found, but they may not follow the desired schema.
+A quick bash script to import a CSV file (like one generated through `geojson-to-csv`) into a SQlite table. 
+
+Note: it is not mandatory to run `create-sql-table` beforehand as this script will generate the column headers if not found, but they will likely not follow the desired schema (i.e. with `id` as the key).
 
 Usage:
 
 ```
-./import_csv_sqlite.sh --filename [YOUR_FILENAME].csv --sqlite [YOUR_SQLITE_DATABASE].db --table [YOUR_TABLE_NAME]
+.\bin\import_csv_sqlite.sh --filename [YOUR_FILENAME].csv --sqlite [YOUR_SQLITE_DATABASE].db --table [YOUR_TABLE_NAME]
 ```
 
 You will likely need to give write permissions to your script:
 
 ```
-chmod +x import_csv_sqlite.sh
+chmod +x .\bin\import_csv_sqlite.sh
 ```
