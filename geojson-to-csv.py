@@ -40,7 +40,7 @@ def main(input_filename, output_filename):
             if 'id' in feature:
                 feature_id = feature['id']
             else:
-                feature_id = generate_random_hash(15)
+                feature_id = generate_random_hash(16)
             
             geometry_fields = flatten_dict(feature['geometry'], 'g')
             properties_fields = flatten_dict(feature['properties'], 'p')
