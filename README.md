@@ -58,6 +58,26 @@ Example output:
 CREATE TABLE geodata (id TEXT PRIMARY KEY, g__coordinates TEXT, g__type TEXT, p__$created TEXT, p__$modified TEXT, p__$photos TEXT, p__$version TEXT);
 ```
 
+## import-csv-to-postgres
+
+A quick script to import your CSV file into a PostgreSQL database.
+
+Python usage:
+
+```
+Python python/import-csv-to-postgres.py --csv [YOUR_FILE].csv --dbname [YOUR_DATABASE] --user [USERNAME] --password [PASSWORD] --host [HOST] --port [PORT] --table [YOUR_DB_TABLE]
+```
+
+Node usage:
+
+```
+node node/import-csv-to-postgres.js --csv [YOUR_FILE].csv --dbname [YOUR_DATABASE] --user [USERNAME] --password [PASSWORD] --host [HOST] --port [PORT] --table [YOUR_DB_TABLE]
+```
+
+The script will validate if your CSV headers are the same as the database table column headers.
+
+The script will alert you if the connection to the database was successful or not, and if the data import was successful or not.
+
 ## import-csv-sqlite.sh
 
 A quick bash script to import a CSV file (like one generated through `geojson-to-csv`) into a SQlite table. 
