@@ -19,10 +19,19 @@ function preprocessColumnName(columnName) {
 
 function flattenObject(data, prefix) {
   let flattened = {};
-  for (let [key, value] of Object.entries(data)) {
-    flattened[`${prefix}__${key}`] = value;
+  if (data !== null) {
+    for (let [key, value] of Object.entries(data)) {
+      flattened[`${prefix}__${key}`] = preprocessField(value);
+    }
   }
   return flattened;
+}
+
+function preprocessField(value) {
+  if (value === null || value === undefined) {
+    return '';
+  }
+  return value.toString().replace(/\n/g, ' '); // Replace line breaks with spaces
 }
 
 function main(inputFilename, outputFilename) {

@@ -11,13 +11,13 @@ A quick script to convert GeoJSON to CSV.
 Python usage:
 
 ```
-python .\python\geojson_to_csv.py --input [YOUR_FILE].geojson --output [YOUR_OUTPUT].csv
+python python/geojson_to_csv.py --input [YOUR_FILE].geojson --output [YOUR_OUTPUT].csv
 ```
 
 Node usage:
 
 ```
-node .\node\geojson-to-csv.js [YOUR_FILE].geojson --output [YOUR_OUTPUT].csv
+node node/geojson-to-csv.js [YOUR_FILE].geojson --output [YOUR_OUTPUT].csv
 ```
 
 The scripts will generate the following columns per the standard GeoJSON fields:
@@ -41,13 +41,13 @@ A quick script to generate a SQL command that creates a SQL table on the basis o
 Python usage:
 
 ```
-python .\python\csv-to-sql.py --input [YOUR_FILE].csv --table [YOUR_TABLE_NAME]
+python python/create-sql-table.py --input [YOUR_FILE].csv --table [YOUR_TABLE_NAME]
 ```
 
 Node usage:
 
 ```
-node .\node\csv-to-sql.js --input [YOUR_FILE].csv --table [YOUR_TABLE_NAME]
+node node/create-sql-table.py --input [YOUR_FILE].csv --table [YOUR_TABLE_NAME]
 ```
 
 The output is printed to the console for you to copy. You can use this in the SQLite CLI or a tool like Beekeeper Studio to create the table.
@@ -67,7 +67,7 @@ Note: it is not mandatory to run `create-sql-table` beforehand as this script wi
 Usage:
 
 ```
-.\bin\import_csv_sqlite.sh --filename [YOUR_FILENAME].csv --sqlite [YOUR_SQLITE_DATABASE].db --table [YOUR_TABLE_NAME]
+bin/import_csv_sqlite.sh --filename [YOUR_FILENAME].csv --sqlite [YOUR_SQLITE_DATABASE].db --table [YOUR_TABLE_NAME]
 ```
 
 You will likely need to give write permissions to your script:

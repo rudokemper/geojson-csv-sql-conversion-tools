@@ -12,10 +12,16 @@ def preprocess_column_name(column_name):
     # Replace hyphens and dollar signs with underscores
     return column_name.replace('-', '_').replace('$', '_')
 
+def preprocess_field(value):
+    if value is None:
+        return ''
+    return str(value).replace('\n', ' ')  # Replace line breaks with spaces
+
 def flatten_dict(data, prefix):
     flattened = {}
-    for key, value in data.items():
-        flattened[f"{prefix}__{key}"] = value
+    if data is not None:
+        for key, value in data.items():
+                        flattened[f"{prefix}__{key}"] = preprocess_field(value)
     return flattened
 
 def main(input_filename, output_filename):
