@@ -3,12 +3,12 @@ import csv
 
 def generate_create_table_sql(table_name, columns):
     sql_columns = ", ".join([f"{col} TEXT" for col in columns])
-    return f"CREATE TABLE {table_name} (id TEXT PRIMARY KEY, {sql_columns});"
+    return f"CREATE TABLE PUBLIC.{table_name} (id TEXT PRIMARY KEY, {sql_columns});"
 
 def read_csv_header(file_path):
     with open(file_path, 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
-        return next(csv_reader)
+        return [col.replace(" ", "_").replace("(", "").replace(")", "") for col in next(csv_reader)]
 
 def convert_csv_to_sql(input_filename, table_name):
     csv_header = read_csv_header(input_filename)

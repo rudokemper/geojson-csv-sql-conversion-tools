@@ -5,7 +5,7 @@ const csv = require('csv-parser');
 
 function generateCreateTableSql(tableName, columns) {
   const sqlColumns = columns.map((col) => `${col} TEXT`).join(', ');
-  return `CREATE TABLE ${tableName} (id TEXT PRIMARY KEY, ${sqlColumns});`;
+  return `CREATE TABLE PUBLIC.${tableName} (id TEXT PRIMARY KEY, ${sqlColumns});`;
 }
 
 function readCsvHeader(filePath) {
@@ -13,8 +13,11 @@ function readCsvHeader(filePath) {
     const stream = fs.createReadStream(filePath);
     stream.pipe(csv())
       .on('headers', (headers) => {
+        const cleanedHeaders = headers.map(header => 
+          header.replace(/ /g, '_').replace(/\(|\)/g, '')
+        );
         stream.destroy();
-        resolve(headers);
+        resolve(cleanedHeaders);
       })
       .on('error', (err) => {
         reject(err);
