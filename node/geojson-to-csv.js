@@ -21,7 +21,13 @@ function flattenObject(data, prefix) {
   let flattened = {};
   if (data !== null) {
     for (let [key, value] of Object.entries(data)) {
-      flattened[`${prefix}__${key}`] = preprocessField(value);
+      let new_key;
+      if (prefix === 'g') {
+        new_key = "g__" + key;
+      } else {
+        new_key = key;
+      }
+      flattened[`${prefix}__${new_key}`] = preprocessField(value);
     }
   }
   return flattened;
@@ -45,7 +51,7 @@ function main(inputFilename, outputFilename) {
 
   for (let feature of features) {
     const geometryFields = flattenObject(feature.geometry, 'g');
-    const propertiesFields = flattenObject(feature.properties, 'p');
+    const propertiesFields = flattenObject(feature.properties, '');
     for (let key of Object.keys(geometryFields)) {
       geometryColumns.add(key);
     }
@@ -67,7 +73,7 @@ function main(inputFilename, outputFilename) {
   for (let feature of features) {
     const featureId = feature.id || generateRandomHash(16);
     const geometryFields = flattenObject(feature.geometry, 'g');
-    const propertiesFields = flattenObject(feature.properties, 'p');
+    const propertiesFields = flattenObject(feature.properties, '');
     const row = [featureId, ...Array.from(geometryColumns).map((col) => geometryFields[col] || ''), ...Array.from(propertiesColumns).map((col) => propertiesFields[col] || '')];
     csvStream.write(row);
   }

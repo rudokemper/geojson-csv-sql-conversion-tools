@@ -21,7 +21,8 @@ def flatten_dict(data, prefix):
     flattened = {}
     if data is not None:
         for key, value in data.items():
-                        flattened[f"{prefix}__{key}"] = preprocess_field(value)
+            new_key = f"{prefix}__{key}" if prefix == 'g' else key
+            flattened[new_key] = preprocess_field(value)
     return flattened
 
 def main(input_filename, output_filename):
@@ -35,7 +36,7 @@ def main(input_filename, output_filename):
 
     for feature in features:
         geometry_columns.update(flatten_dict(feature['geometry'], 'g').keys())
-        properties_columns.update(flatten_dict(feature['properties'], 'p').keys())
+        properties_columns.update(flatten_dict(feature['properties'], '').keys())
 
     with open(output_filename, 'w', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
@@ -49,7 +50,7 @@ def main(input_filename, output_filename):
                 feature_id = generate_random_hash(16)
             
             geometry_fields = flatten_dict(feature['geometry'], 'g')
-            properties_fields = flatten_dict(feature['properties'], 'p')
+            properties_fields = flatten_dict(feature['properties'], '')
             
             row = [feature_id] + [geometry_fields.get(col, '') for col in sorted(geometry_columns)] + [properties_fields.get(col, '') for col in sorted(properties_columns)]
             csv_writer.writerow(row)
