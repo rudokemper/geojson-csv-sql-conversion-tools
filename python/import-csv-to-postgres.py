@@ -24,6 +24,11 @@ def insert_csv_data(csv_filename, db_params, table_name):
 
             if all(clean_column_name(col) for col in csv_header) == all(clean_column_name(col) for col in table_columns):                
                 for row in csv_reader:
+                    cur.execute(f"SELECT 1 FROM {table_name} WHERE {table_columns[0]} = %s", (row[0],))
+                    if cur.fetchone():
+                        print(f"Skipping row with ID {row[0]} as it already exists in the table.")
+                        continue
+                    
                     query = f"INSERT INTO {table_name} VALUES ({', '.join(['%s']*len(row))})"
                     cur.execute(query, row)
 

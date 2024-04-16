@@ -29,6 +29,12 @@ async function insertCSVData(csvFilename, dbParams, table) {
     if (JSON.stringify(cleanedCsvHeader) === JSON.stringify(cleanedTableColumns)) {
       for (let i = 1; i < csvLines.length; i++) {
         const row = csvLines[i].split(',');
+        const checkQuery = `SELECT 1 FROM ${table} WHERE ${tableColumns[0]} = $1`;
+        const result = await client.query(checkQuery, [row[0]]);
+        if (result.rows.length > 0) {
+          console.log(`Skipping row with ID ${row[0]} as it already exists in the table.`);
+          continue;
+        }
         const query = `INSERT INTO ${table} VALUES (${Array(row.length).fill().map((_, idx) => `$${idx + 1}`).join(', ')})`;
         await client.query(query, row);
       }
